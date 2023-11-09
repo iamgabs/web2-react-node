@@ -18,13 +18,15 @@ const userController = {
             console.log(error);
         }
     },
-    readAll: async(req, res)=>{
-        let results = await UserModel.find({});
-        //.limit(50);
-
-        res.send(results).status(200);
+    readAll: async (req, res) => {
+        try {
+            const results = await UserModel.find({});
+            res.status(200).json(results);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: "Erro ao listar usuários." });
+        }
     },
-
     readOne: async(req, res)=>{
         try {
             const id = req.params.id;
